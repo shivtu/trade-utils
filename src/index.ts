@@ -92,6 +92,58 @@ const isCandleRed = (candle: ICandle) => candle.c < candle.o;
 const isTrafficLightPair = (previousCandle: ICandle, nextCandle: ICandle) =>
   isCandleGreen(previousCandle) !== isCandleGreen(nextCandle);
 
+/** Runs the call back function every 1 min starting from the next 1st minute */
+const runEveryNew1stMin = (fn: () => any) => {
+  const time = new Date(),
+    secondsRemaining = (60 - time.getSeconds()) * 1000;
+
+  setTimeout(function () {
+    setInterval(fn, 60000);
+  }, secondsRemaining);
+};
+
+/** Runs the call back function every 5 mins starting from the next 5th minute */
+const runEveryNew5thMin = (fn: () => void): void => {
+  const now = new Date();
+  const secondsUntilNext5thMin =
+    (300 - (now.getSeconds() + 60 * (now.getMinutes() % 5))) * 1000;
+  setTimeout(() => {
+    fn();
+    setInterval(fn, 300000); // Run every 5 minutes after the first execution
+  }, secondsUntilNext5thMin);
+};
+
+/**
+ * @param n specifies the interval in minutes between executions
+ * @param newNthMin target new minute from which execution should start (exxample: the next 1st, 5th, 15th ... minute)
+ * @param fn call back to run every interval
+ */
+const runEveryNewNthMin = (
+  n: number,
+  newNthMin: number,
+  fn: () => void
+): void => {
+  const now = new Date();
+  let nextExecution = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    now.getHours(),
+    newNthMin,
+    0
+  );
+  if (now.getTime() > nextExecution.getTime()) {
+    nextExecution = new Date(nextExecution.getTime() + n * 60 * 1000);
+  }
+  const millisecondsUntilNextExecution =
+    nextExecution.getTime() - now.getTime();
+
+  setTimeout(() => {
+    fn();
+    setInterval(fn, n * 60 * 1000);
+  }, millisecondsUntilNextExecution);
+};
+
 export {
   calcLineSlope,
   calcSMASlope,
@@ -101,4 +153,7 @@ export {
   isCandleGreen,
   isCandleRed,
   isTrafficLightPair,
+  runEveryNew1stMin,
+  runEveryNew5thMin,
+  runEveryNewNthMin,
 };
