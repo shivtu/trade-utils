@@ -1,6 +1,6 @@
 {
   "name": "trade-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "misc helpers for trading software",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
