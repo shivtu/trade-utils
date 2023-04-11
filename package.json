@@ -1,0 +1,23 @@
+{
+  "name": "trade-utils",
+  "version": "1.0.0",
+  "description": "misc helpers for trading software",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivtu/trade-utils.git"
+  },
+  "keywords": ["candle data analysis", "technical indicators"],
+  "author": "shibendutta@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shivtu/trade-utils/issues"
+  },
+  "homepage": "https://github.com/shivtu/trade-utils#readme",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
